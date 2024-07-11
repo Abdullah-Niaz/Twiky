@@ -8,10 +8,10 @@ def index(request):
 
 
 def tweet_list(request):
-    tweet = Tweet.objects.all().order_by("-create_at")
+    tweet = Tweet.objects.all().order_by("-created_at")
     return render(request,"tweet_list.html",{"tweets":tweet})
 
-def create_tweet(request):
+def tweet_create(request):
     if request.method =="POST":
         tweet = TweetForm(request.POST,request.FILES)
         if tweet.is_valid():
