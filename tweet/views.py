@@ -1,3 +1,5 @@
+from .forms import BootstrapLoginForm
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.shortcuts import HttpResponse,redirect,get_object_or_404
 from django.contrib.auth import login
@@ -52,7 +54,13 @@ def tweet_delete(request,tweet_id):
     if request.method == "POST":
         tweet.delete()
         return redirect("tweet_list")
-    return render(request,"tweet_confirm_delete.html",{"tweet":tweet})
+    return render(request, "tweet_confirm_delete.html", {"tweet": tweet})
+
+
+class CustomLoginView(LoginView):
+    authentication_form = BootstrapLoginForm
+    template_name = 'login.html'  
+
 
 def register(request):
     if request.method == "POST":

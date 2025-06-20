@@ -1,15 +1,38 @@
-{% extends "base.html" %}
-
-{% block title %}
+{% extends "base.html" %} {% block title %}
 <title>Register Page</title>
-{% endblock title %}
-
-
-{% block content %}
-    <h1 class="text-center mt-4">Wellcome to the Tweet Register </h1>
-    <form action="" method="post">
+{% endblock title %} {% block content %}
+    <h1 class="text-center mt-4">Wellcome to the Tweet Register</h1>
+    
+    <form method="post">
         {% csrf_token %}
-        {{form.as_p}}
-        <button  class="btn btn-primary" type="submit">Submit</button> 
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="mb-3">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-danger">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Register</button>
     </form>
-{% endblock content %}
+
+      {% endblock content %}
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+<!-- <form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button  class="btn btn-primary" type="submit">Submit</button> 
+</form> -->
+    </div>
+  </div>
+</form>
