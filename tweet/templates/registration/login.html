@@ -1,17 +1,23 @@
-{% extends "base.html" %}
-
-{% block title %}
+{% extends "base.html" %} {% load static %} {% block title %}
 <title>Login Page</title>
-{% endblock title %}
+{% endblock title %} {% block content %}
+<div class="card mx-auto mt-5" style="max-width: 500px">
+  <div class="card-body">
+    <h2 class="card-title text-center mb-4">Login</h2>
 
+    <form method="post">
+      {% csrf_token %} {% for field in form %}
+      <div class="mb-3">
+        {{ field.label_tag }} {{ field }} {% if field.errors %}
+        <div class="text-danger">{{ field.errors|striptags }}</div>
+        {% endif %}
+      </div>
+      {% endfor %}
 
-{% block content %}
-    <h1 class="text-center mt-4">Wellcome to the Tweet Login </h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button  class="btn btn-primary" type="submit">Submit</button> 
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
     </form>
-
-    <p>Done Have an Account <a href="{% url 'register' %}">Register Here</a></p>
+  </div>
+</div>
 {% endblock content %}

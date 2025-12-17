@@ -15,20 +15,19 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="insecure-key")
+DEBUG = os.getenv("DEBUG", default="True") == "True"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*p69x3o#b5gr^-jh9$kjco(43+7n$f62ci0lxlwrjbs2rr86)o"
+# SECRET_KEY = "django-insecure-*p69x3o#b5gr^-jh9$kjco(43+7n$f62ci0lxlwrjbs2rr86)o"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', '*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -117,11 +117,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = [
-    BASE_DIR/'static'
-]
-
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+if os.getenv("VERCEL"):
+    DEBUG = False
+# STATICFILES_DIRS = [
+#     BASE_DIR/'static'
+# ]
 
 
 MEDIA_URL = "/media/"
@@ -136,6 +138,9 @@ LOGIN_URL = "/accounts/login"
 
 LOGIN_REDIRECT_URL = 'tweet_list'  # Redirect to tweet_list after successful login
 LOGOUT_REDIRECT_URL = 'login'  # Redirect to login page after logout
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 # LOGIN_REDIRECT_URL = '/tweet/'
 # LOGOUT_REDIRECT_URL = '/tweet/'
