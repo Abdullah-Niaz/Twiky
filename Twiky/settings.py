@@ -53,7 +53,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "Twiky.urls"
 
-TEMPLATES = [
+TEMPLATES = [   
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [BASE_DIR/'templates'],
